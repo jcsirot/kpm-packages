@@ -1,0 +1,41 @@
+---
+package:
+  name: jcsirot/sonarqube
+  author: Jean-Christophe Sirot
+  version: 5.4
+  description: sonarqube
+  license: MIT
+
+variables:
+  image: sonarqube:5.4-alpine
+  db_host: mysql.{{ namespace }}.svc.cluster.local
+  db_name: sonarqube
+  db_user: sonarqube
+  db_pass: sonarqubepass
+  volumes:
+    - name: sonarqube-data
+      hostPath:
+        path: "/containers/rc/{{ namespace }}/sonarqube/sonarqube-data"
+    - name: sonarqube-extensions
+      hostPath:
+        path: "/containers/rc/{{ namespace }}/sonarqube/sonarqube-extensions"
+
+
+resources:
+  - file: sonarqube-rc.yaml
+    name: sonarqube
+    type: rc
+
+  - file: sonarqube-svc.yaml
+    name: sonarqube
+    type: svc
+
+shards: []
+
+deploy:
+  - name: mysql/mysql
+    variables:
+      database: sonarqube
+      user: sonarqube
+      password: sonarqubepass
+  - name: $self
