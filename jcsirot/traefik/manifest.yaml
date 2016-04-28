@@ -1,0 +1,34 @@
+---
+package:
+  name: jcsirot/traefik
+  author: Jean-Christophe Sirot
+  version: 1.0.0-beta
+  description: traefik
+  license: MIT
+
+variables: 
+  namespace: traefik
+  image: containous/traefik
+  loglevel: DEBUG
+
+resources:
+  - file: traefik-rc.yaml
+    name: traefik
+    type: rc
+
+  - file: traefik-svc.yaml
+    name: traefik
+    type: svc
+
+  - file: traefik-dashboard-svc.yaml
+    name: traefik-dashboard
+    type: svc
+
+  - file: traefik-configmap.yaml
+    name: traefik
+    type: configmap
+
+shards: []
+
+deploy:
+  - name: $self

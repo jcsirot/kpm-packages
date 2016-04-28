@@ -1,0 +1,29 @@
+---
+package:
+  name: jcsirot/jenkins
+  author: Jean-Christophe Sirot
+  version: 2.0.0
+  description: jenkins
+  license: MIT
+
+variables:
+  namespace: jenkins
+  image: jcsirot/jenkins:2.0-alpine
+  volumes:
+    - name: jenkins-home
+      hostPath:
+        path: "/containers/rc/{{ namespace }}/jenkins/jenkins-home"
+
+resources:
+  - file: jenkins-rc.yaml
+    name: jenkins
+    type: rc
+
+  - file: jenkins-svc.yaml
+    name: jenkins
+    type: svc
+
+shards: []
+
+deploy:
+  - name: $self

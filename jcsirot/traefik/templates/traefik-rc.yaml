@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: traefik
+  namespace: {{ namespace }}
+  labels: {'k8s-app': 'traefik', 'version': 'v1'}
+spec:
+  replicas: 1
+  selector: {'k8s-app': 'traefik'}
+  template:
+    metadata:
+      labels: {'k8s-app': 'traefik', 'version': 'v1'}
+    spec:
+      containers:
+      - name: traefik
+        image: {{ image }}
+        resources:
+          limits:
+            cpu: 200m
+            memory: 500Mi
+        volumeMounts:
+          - mountPath: /etc/traefik
+            name: config
+        ports:
+          - protocol: TCP
+            containerPort: 8080
+          - protocol: TCP
+            containerPort: 80
+      volumes:
+        - name: config
+          configMap:
+            name: traefik
