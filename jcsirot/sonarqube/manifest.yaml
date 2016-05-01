@@ -2,11 +2,12 @@
 package:
   name: jcsirot/sonarqube
   author: Jean-Christophe Sirot
-  version: 5.4
+  version: 5.4-1
   description: sonarqube
   license: MIT
 
 variables:
+  namespace: sonarqube
   image: sonarqube:5.4-alpine
   db_host: mysql.{{ namespace }}.svc.cluster.local
   db_name: sonarqube
