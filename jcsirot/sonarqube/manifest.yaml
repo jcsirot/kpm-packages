@@ -2,7 +2,7 @@
 package:
   name: jcsirot/sonarqube
   author: Jean-Christophe Sirot
-  version: 5.4-1
+  version: 5.4.0-1
   description: sonarqube
   license: MIT
 
