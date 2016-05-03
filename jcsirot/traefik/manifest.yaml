@@ -6,19 +6,15 @@ package:
   description: traefik
   license: MIT
 
-variables: 
+variables:
   namespace: traefik
   image: containous/traefik
   loglevel: DEBUG
 
 resources:
-  - file: traefik-rc.yaml
+  - file: traefik-daemonset.yaml
     name: traefik
-    type: rc
-
-  - file: traefik-svc.yaml
-    name: traefik
-    type: svc
+    type: daemonset
 
   - file: traefik-dashboard-svc.yaml
     name: traefik-dashboard

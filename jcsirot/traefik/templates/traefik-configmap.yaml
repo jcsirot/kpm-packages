@@ -5,10 +5,10 @@ kind: ConfigMap
 data:
   traefik.toml: |
     logLevel = "{{ loglevel }}"
+    defaultEntryPoints = ["http", "https"]
     [web]
     address = ":8080"
     [kubernetes]
 
 metadata:
   name: traefik
-
