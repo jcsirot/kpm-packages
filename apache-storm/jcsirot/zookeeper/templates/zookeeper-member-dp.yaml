@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: zookeeper
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+        zookeeper_node: zookeeper-{{name}}
+    spec:
+      nodeSelector:
+        persistent-control: 'yes'
+      containers:
+        - image: {{image}}
+          name: zookeeper
+          env:
+            - name: MYID
+              value: "{{name}}"
+          command:
+            - bash
+            - "-c"
+            - >-
+              mkdir -p /opt/zookeeper/conf
+              mkdir -p /var/lib/zookeeper/
+              echo "$MYID" > /var/lib/zookeeper/myid
+              sleep 20
+              /opt/zookeeper/bin/zkServer.sh start-foreground
+          ports:
+            - containerPort: 2181
+              name: client
+              protocol: TCP
+            - containerPort: 2888
+              name: peer
+              protocol: TCP
+            - containerPort: 3888
+              name: leader
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /opt/zookeeper/conf
+              name: config
+      volumes:
+        - name: config
+          configMap:
+            name: zookeeper

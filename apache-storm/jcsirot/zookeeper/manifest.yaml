@@ -1,0 +1,35 @@
+---
+package:
+  name: jcsirot/zookeeper-3nodes
+  author: Jean-Christophe Sirot
+  version: 3.4.8-1
+  description: zookeeper-3nodes
+  license: MIT
+
+variables:
+  image: jplock/zookeeper
+
+resources:
+  - file: zookeeper-member-dp.yaml
+    name: zookeeper
+    type: deployment
+
+  - file: zookeeper-member-svc.yaml
+    name: zookeeper
+    type: svc
+
+  - file: zookeeper-member-configmap.yaml
+    name: zookeeper
+    type: configmap
+
+  - file: zookeeper-svc.yaml
+    name: zookeeper
+    type: svc
+
+shards:
+  - name: 1
+  - name: 2
+  - name: 3
+
+deploy:
+  - name: $self
