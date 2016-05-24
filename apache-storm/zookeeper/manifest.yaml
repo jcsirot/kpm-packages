@@ -1,9 +1,9 @@
 ---
 package:
-  name: jcsirot/zookeeper-3nodes
+  name: apache-storm/zookeeper
   author: Jean-Christophe Sirot
   version: 3.4.8-1
-  description: zookeeper-3nodes
+  description: zookeeper
   license: MIT
 
 variables:
