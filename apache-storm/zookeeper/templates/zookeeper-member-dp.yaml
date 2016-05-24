@@ -10,8 +10,6 @@ spec:
         app: zookeeper
         zookeeper_node: zookeeper-{{name}}
     spec:
-      nodeSelector:
-        persistent-control: 'yes'
       containers:
         - image: {{image}}
           name: zookeeper
@@ -20,13 +18,19 @@ spec:
               value: "{{name}}"
           command:
             - bash
+            - "-x"
             - "-c"
             - >-
               mkdir -p /opt/zookeeper/conf
+
               mkdir -p /var/lib/zookeeper/
+
               echo "$MYID" > /var/lib/zookeeper/myid
+
               sleep 20
+
               /opt/zookeeper/bin/zkServer.sh start-foreground
+              
           ports:
             - containerPort: 2181
               name: client
@@ -43,4 +47,4 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: zookeeper
+            name: zookeeper-{{name}}

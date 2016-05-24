@@ -10,17 +10,20 @@ variables:
   image: jplock/zookeeper
 
 resources:
+  - file: zookeeper-member-configmap.yaml
+    name: zookeeper
+    type: configmap
+    sharded: yes
+
   - file: zookeeper-member-dp.yaml
     name: zookeeper
     type: deployment
+    sharded: yes
 
   - file: zookeeper-member-svc.yaml
     name: zookeeper
     type: svc
-
-  - file: zookeeper-member-configmap.yaml
-    name: zookeeper
-    type: configmap
+    sharded: yes
 
   - file: zookeeper-svc.yaml
     name: zookeeper
