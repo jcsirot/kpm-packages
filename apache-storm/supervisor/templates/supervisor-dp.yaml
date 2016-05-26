@@ -1,0 +1,40 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: supervisor
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: apache-storm-supervisor
+    spec:
+      containers:
+        - image: {{image}}
+          name: supervisor
+          ports:
+            - containerPort: 6700
+              name: worker-1
+              protocol: TCP
+            - containerPort: 6701
+              name: worker-2
+              protocol: TCP
+            - containerPort: 6702
+              name: worker-3
+              protocol: TCP
+            - containerPort: 6703
+              name: worker-4
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /opt/apache-storm/conf
+              name: config
+      volumes:
+        - name: config
+          configMap:
+            name: supervisor
+            items:
+              - path: storm.yaml
+                key: storm.yaml
+              - path: storm_env.ini
+                key: env.ini

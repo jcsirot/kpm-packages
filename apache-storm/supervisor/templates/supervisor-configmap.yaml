@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: supervisor
+data:
+  storm.yaml: |-
+    storm.zookeeper.servers:
+    {% for zk in zookeeper.hosts %}
+      - {{ zk }}
+    {% endfor %}
+    storm.zookeeper.port: {{zookeeper.port}}
+    nimbus.seeds:
+    {% for nb in nimbus.hosts %}
+      - {{ nb }}
+    {% endfor %}
+    storm.local.dir: "/mnt/storm"
+
+  env.ini: |-
+    [environment]

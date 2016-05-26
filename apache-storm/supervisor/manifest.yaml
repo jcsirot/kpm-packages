@@ -1,0 +1,37 @@
+---
+package:
+  name: apache-storm/supervisor
+  author: Jean-Christophe Sirot
+  version: 1.0.0-1
+  description: supervisor
+  license: MIT
+
+variables:
+  image: jcsirot/storm-supervisor
+  zookeeper:
+    hosts:
+      - zookeeper-1.default.svc.cluster.local
+      - zookeeper-2.default.svc.cluster.local
+      - zookeeper-3.default.svc.cluster.local
+    port: 2181
+  nimbus:
+    hosts:
+      - nimbus
+
+resources:
+  - file: supervisor-configmap.yaml
+    name: supervisor
+    type: configmap
+
+  - file: supervisor-dp.yaml
+    name: supervisor
+    type: deployment
+
+  - file: supervisor-svc.yaml
+    name: supervisor
+    type: svc
+
+shards: []
+
+deploy:
+  - name: $self

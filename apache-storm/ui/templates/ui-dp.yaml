@@ -1,0 +1,31 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ui
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: apache-storm-ui
+    spec:
+      containers:
+        - image: {{image}}
+          name: nimbus
+          ports:
+            - containerPort: 8080
+              name: web
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /opt/apache-storm/conf
+              name: config
+      volumes:
+        - name: config
+          configMap:
+            name: ui
+            items:
+              - path: storm.yaml
+                key: storm.yaml
+              - path: storm_env.ini
+                key: env.ini

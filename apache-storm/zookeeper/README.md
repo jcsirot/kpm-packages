@@ -1,5 +1,5 @@
 
-jcsirot/zookeeper-3nodes
+apache-storm/zookeeper
 ===========
 
 # Install

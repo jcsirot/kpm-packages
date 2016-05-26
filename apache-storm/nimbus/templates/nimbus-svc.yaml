@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nimbus
+spec:
+  type: NodePort
+  ports:
+  - name: drpc
+    port: 3772
+    targetPort: 3772
+    protocol: TCP
+  - name: thrift
+    port: 6627
+    targetPort: 6627
+    protocol: TCP
+  selector:
+    app: apache-storm-nimbus

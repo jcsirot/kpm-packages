@@ -1,0 +1,34 @@
+---
+package:
+  name: apache-storm/nimbus
+  author: Jean-Christophe Sirot
+  version: 1.0.0-1
+  description: nimbus
+  license: MIT
+
+variables:
+  image: jcsirot/storm-nimbus
+  zookeeper:
+    hosts:
+      - zookeeper-1.default.svc.cluster.local
+      - zookeeper-2.default.svc.cluster.local
+      - zookeeper-3.default.svc.cluster.local
+    port: 2181
+
+resources:
+  - file: nimbus-configmap.yaml
+    name: nimbus
+    type: configmap
+
+  - file: nimbus-dp.yaml
+    name: nimbus
+    type: deployment
+
+  - file: nimbus-svc.yaml
+    name: nimbus
+    type: svc
+
+shards: []
+
+deploy:
+  - name: $self

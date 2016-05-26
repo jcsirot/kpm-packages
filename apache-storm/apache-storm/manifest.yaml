@@ -1,0 +1,13 @@
+---
+package:
+  name: apache-storm/apache-storm
+  author: Jean-Christophe Sirot <jc@sirot.org>
+  version: 1.0.0-1
+  description: apache-storm
+  license: MIT
+
+deploy:
+  - name: apache-storm/zookeeper
+  - name: apache-storm/nimbus
+  - name: apache-storm/storm-ui
+  - name: apache-storm/supervisor

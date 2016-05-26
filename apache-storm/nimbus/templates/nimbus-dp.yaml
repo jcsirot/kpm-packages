@@ -1,0 +1,36 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nimbus
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        pod.beta.kubernetes.io/hostname: nimbus
+      labels:
+        app: apache-storm-nimbus
+    spec:
+      containers:
+        - image: {{image}}
+          name: nimbus
+          ports:
+            - containerPort: 3772
+              name: drpc
+              protocol: TCP
+            - containerPort: 6627
+              name: thrift
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /opt/apache-storm/conf
+              name: config
+      volumes:
+        - name: config
+          configMap:
+            name: nimbus
+            items:
+              - path: storm.yaml
+                key: storm.yaml
+              - path: storm_env.ini
+                key: env.ini
