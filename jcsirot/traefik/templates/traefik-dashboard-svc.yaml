@@ -10,6 +10,6 @@ spec:
   type: NodePort
   ports:
     - protocol: TCP
-      name: traefik-dashboard
+      name: traefik-board
       targetPort: 8080
       port: 8080
