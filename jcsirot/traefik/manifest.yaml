@@ -10,6 +10,8 @@ variables:
   namespace: traefik
   image: containous/traefik:v1.0.0-rc1
   loglevel: DEBUG
+  port:
+    http: 80
 
 resources:
 
@@ -20,6 +22,14 @@ resources:
   - file: traefik-deployment.yaml
     name: traefik
     type: deployment
+
+  - file: traefik-daemonset.yaml
+    name: traefik-proxy
+    type: daemonset
+
+  - file: traefik-svc.yaml
+    name: traefik
+    type: svc
 
   - file: traefik-dashboard-svc.yaml
     name: traefik-dashboard

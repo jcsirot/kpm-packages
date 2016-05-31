@@ -1,0 +1,23 @@
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: traefik-proxy
+  namespace: {{ namespace }}
+  labels: {'k8s-app': 'proxy-to-service', 'version': 'v2'}
+spec:
+  template:
+    metadata:
+      labels: {'k8s-app': 'proxy-to-service', 'version': 'v2'}
+    spec:
+      nodeSelector:
+        traefik-entrypoint: 'yes'
+      containers:
+      - name: proxy-http
+        image: gcr.io/google_containers/proxy-to-service:v2
+        args: ["tcp", "80", "traefik.{{ namespace }}.svc.cluster.local"]
+        ports:
+          - protocol: TCP
+            name: proxy-http
+            containerPort: 80
+            hostPort: {{ port.http }}
